@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 /*
- * This is purposly build to lead to path explosion so angr in explore mode can't solve this. 
+ * A little more dynamic.
  * Input from stdin.
  */
 
