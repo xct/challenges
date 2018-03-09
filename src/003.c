@@ -3,26 +3,10 @@
 #include <string.h>
 #include <unistd.h>
 
-/*
- * A little more dynamic.
- * Input from stdin.
- */
-
-void print_bytes(char *buf, int len){
-	int i =0;	
-	while (i < len)
-	{
-	     printf("%02X ",(unsigned char) buf[i]);
-	     i++;
-	}
-	printf("\n");
-}
-
 void parse_header(char *buf, int len){
 	char type = buf[1];
 	char pass[9] = "CAFEBABE\0";
-	if(type == 'X'){
-		// AFL can find this
+	if(type == 'X'){		
 		printf("Type X\n");		
 	}
 	else if(type == 'Y'){
@@ -32,15 +16,13 @@ void parse_header(char *buf, int len){
 			n--;			
 			pass[n]++;			
 		}
-		printf("%s\n",pass);
-		// AFL can find this		
-		if(strncmp (buf+10, pass, 8)==0){
-			// AFL has a very low chance to find this path on its own, however angr can solve this with full exploration easily			
+		printf("%s\n",pass);			
+		if(strncmp (buf+10, pass, 8)==0){				
 			volatile unsigned char *ptr = (volatile unsigned char *)0x0;
 			printf("Secret!\n");
 			*((int *)0) = 0;
 		}
-	printf("Error no type detected\n");
+		printf("Error no type detected\n");
 	}
 }
 
@@ -48,7 +30,6 @@ int main(int argc, char** argv){
 	char buffer[20];
 	read(STDIN_FILENO, buffer, 20);
 	buffer[19] = '\0';
-	print_bytes(buffer, strlen(buffer));
 	parse_header(buffer,strlen(buffer));
 	return 0;
 }

@@ -4,27 +4,11 @@
 #include <unistd.h>
 
 
-/*
- * A little more dynamic.
- * Input from stdin.
- */
-
-void print_bytes(char *buf, int len){
-	int i =0;	
-	while (i < len)
-	{
-	     printf("%02X ",(unsigned char) buf[i]);
-	     i++;
-	}
-	printf("\n");
-}
-
 void parse_header(char *buf, int len){
 	char type = buf[1];
 	char pass[33] = "0ed1f373aa7243d31e20be369e299e11\0";
 	int key = 16;
-	if(type == 'X'){
-		// AFL can find this
+	if(type == 'X'){		
 		printf("Type X\n");		
 	}
 	else if(type == 'Y'){
@@ -49,8 +33,7 @@ void parse_header(char *buf, int len){
 int main(int argc, char** argv){	
 	char buffer[20];
 	read(STDIN_FILENO, buffer, 20);
-	buffer[19] = '\0';
-	print_bytes(buffer, strlen(buffer));
+	buffer[19] = '\0';	
 	parse_header(buffer,strlen(buffer));
 	return 0;
 }
