@@ -10,7 +10,6 @@ void parse_header(char *buf, int len){
 	}
 	else if(type == 'Y'){		
 		if(strncmp (buf+10, "CAFEBABE", 8)==0){				
-			volatile unsigned char *ptr = (volatile unsigned char *)0x0;
 			printf("Secret!\n");
 			*((int *)0) = 0;
 		}

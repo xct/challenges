@@ -18,7 +18,6 @@ void parse_header(char *buf, int len){
 		}
 		printf("%s\n",pass);			
 		if(strncmp (buf+10, pass, 8)==0){				
-			volatile unsigned char *ptr = (volatile unsigned char *)0x0;
 			printf("Secret!\n");
 			*((int *)0) = 0;
 		}
