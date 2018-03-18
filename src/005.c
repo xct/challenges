@@ -12,13 +12,17 @@ int parse_header(char *buf, int len){
 	printf("b = %d\n",b);
 	while(a--){
 		while(b--){			
-			if (a+b == 8){				
-				return 1;
-			} else {
-				return 0;
-			}				
+			if (a+b == 8){
+				printf("Almost..\n");
+				if(strncmp (buf+2, "CAFEBABE", 8)==0){				
+					printf("Secret!\n");					
+					return 1;
+				} else {
+					return 0;
+				}				
+			}
 		}
-	}	
+	}
 	return 0;
 }
 
@@ -31,3 +35,4 @@ int main(int argc, char** argv){
 	}
 	return 0;
 }
+
