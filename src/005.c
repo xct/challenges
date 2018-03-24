@@ -5,7 +5,12 @@
 
 #define SIZE 100
 
-int parse_header(char *buf, int len){
+/* 
+ * Challenge 005
+ * This is an example that is easy to solve with symbolic execution. In addition to 004 there is a magic vale check inside the double loops and depedency condition.
+ */
+
+int func(char *buf, int len){
 	int a = buf[0] - '0';
 	int b = buf[1] - '0';
 	printf("a = %d\n",a);
@@ -30,7 +35,7 @@ int main(int argc, char** argv){
 	char buffer[SIZE];
 	read(STDIN_FILENO, buffer, SIZE);
 	buffer[SIZE-1] = '\0';
-	if(parse_header(buffer,strlen(buffer))){
+	if(func(buffer,strlen(buffer))){
 		*((int *)0) = 0;
 	}
 	return 0;

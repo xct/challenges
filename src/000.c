@@ -3,17 +3,27 @@
 #include <string.h>
 #include <unistd.h>
 
-void parse_header(char *buf){
+/*
+ * Challenge 000 
+ * This is an example that is very easy to solve with symbolic execution.
+ */
+
+#define SIZE 100
+
+int func(char *buf){
 		if(strncmp (buf+10, "CAFEBABE", 8)==0){			
 			printf("Secret!\n");
-			*((int *)0) = 0;
+			return 1;
 		}	
+	return 0;
 }
 
 int main(int argc, char** argv){	
-	char buffer[20];
-	read(STDIN_FILENO, buffer, 20);
-	buffer[19] = '\0';
-	parse_header(buffer);
+	char buffer[SIZE];
+	read(STDIN_FILENO, buffer, SIZE);
+	buffer[SIZE-1] = '\0';
+	if(func(buffer)){
+		*((int *)0) = 0;
+	}
 	return 0;
 }

@@ -2,11 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#define SIZE 100
-
 #include <stdio.h>
 
+/* 
+ * Challenge 006
+ * This is is an example of path explosion combined with a late magic value check. The program is constructed so that symbolic execution can not solve the first part,
+ * but is required to solve the second part. The analysis tool needs to combine fuzzing with symbolic execution to reach the secret compartment.
+ */
+
+#define SIZE 100
 
 int func(char *buffer, int len){
 	int i, count = 0;
@@ -25,7 +29,6 @@ int func(char *buffer, int len){
 	return 0;
 }
 
-// path explosion
 int main(int argc, char** argv){	
 	char buffer[SIZE];
 	read(STDIN_FILENO, buffer, SIZE);
