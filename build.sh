@@ -10,7 +10,6 @@ gcc -m32 -o ./build32/002 ./src/002.c
 gcc -m32 -o ./build32/003 ./src/003.c
 gcc -m32 -o ./build32/004 ./src/004.c
 gcc -m32 -o ./build32/005 ./src/005.c
-gcc -m32 -o ./build32/006 ./src/006.c
 
 # 64-Bit
 gcc -o ./build64/000 ./src/000.c
@@ -19,6 +18,5 @@ gcc -o ./build64/002 ./src/002.c
 gcc -o ./build64/003 ./src/003.c
 gcc -o ./build64/004 ./src/004.c
 gcc -o ./build64/005 ./src/005.c
-gcc -o ./build64/006 ./src/006.c
 
 echo "Done"

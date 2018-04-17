@@ -5,7 +5,6 @@
 
 /* 
  * Challenge 003
- * This is an example that is very easy to solve with symbolic execution. The difference compared to 001 is that the input is now coming from a file instead of stdin.
  */
 
 #define SIZE 100

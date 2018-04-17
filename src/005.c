@@ -2,31 +2,29 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#define SIZE 100
+#include <stdio.h>
 
 /* 
  * Challenge 005
- * This is an example that is easy to solve with symbolic execution. In addition to 004 there is a magic vale check inside the double loops and depedency condition.
+ * This is the same as 004 however with a twist. Even when combining fuzzing and symbolic Execution this one is hard to solve, 
+ * since the "A"-Condition could place "A"s in Areas where to password check later is, which makes it unsolvable for the symbolic executor.
  */
 
-int func(char *buf, int len){
-	int a = buf[0] - '0';
-	int b = buf[1] - '0';
-	printf("a = %d\n",a);
-	printf("b = %d\n",b);
-	while(a--){
-		while(b--){			
-			if (a+b == 8){
-				printf("Almost..\n");
-				if(strncmp (buf+2, "CAFEBABE", 8)==0){				
-					printf("Secret!\n");					
-					return 1;
-				} else {
-					return 0;
-				}				
-			}
+#define SIZE 100
+
+int func(char *buffer, int len){
+	int i, count = 0;
+	for(i=0;i<SIZE;i++){
+		if(buffer[i]=='A')
+			count++;
+	}
+	printf("%d\n",count);
+	if (count == 42) {
+		if(strncmp(buffer+80,"SUPERSECRETP4SSWORD",19)==0){
+			printf("Secret!\n");
+			return 1;
 		}
+		printf("Almost.. !\n");		
 	}
 	return 0;
 }
@@ -35,9 +33,9 @@ int main(int argc, char** argv){
 	char buffer[SIZE];
 	read(STDIN_FILENO, buffer, SIZE);
 	buffer[SIZE-1] = '\0';
-	if(func(buffer,strlen(buffer))){
+	
+	if (func(buffer,SIZE)){
 		*((int *)0) = 0;
 	}
 	return 0;
 }
-
