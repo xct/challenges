@@ -6,15 +6,16 @@
 
 /* 
  * Challenge 005
- * This is the same as 004 however with a twist. Even when combining fuzzing and symbolic Execution this one is hard to solve, 
- * since the "A"-Condition could place "A"s in Areas where to password check later is, which makes it unsolvable for the symbolic executor.
+ * This is the same as 004 however with a twist. Even when combining fuzzing and symbolic Execution this one is very hard to solve, 
+ * the "A"-Condition could place "A"s in Areas where to password check later is, which makes it unsolvable for the symbolic executor. Also no length is enforced which makes it a matter of luck
+ * weather afl generates files large enough.
  */
 
 #define SIZE 100
 
 int func(char *buffer, int len){
 	int i, count = 0;
-	for(i=0;i<SIZE;i++){
+	for(i=0;i<len;i++){
 		if(buffer[i]=='A')
 			count++;
 	}
@@ -31,10 +32,10 @@ int func(char *buffer, int len){
 
 int main(int argc, char** argv){	
 	char buffer[SIZE];
-	read(STDIN_FILENO, buffer, SIZE);
+	int len = read(STDIN_FILENO, buffer, SIZE);
 	buffer[SIZE-1] = '\0';
 	
-	if (func(buffer,SIZE)){
+	if (func(buffer,len)){
 		*((int *)0) = 0;
 	}
 	return 0;
