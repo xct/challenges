@@ -20,8 +20,8 @@ int func(char *buf){
 
 int main(int argc, char** argv){	
 	char buffer[SIZE];
-	read(STDIN_FILENO, buffer, SIZE);
-	buffer[SIZE-1] = '\0';
+	int len = read(STDIN_FILENO, buffer, SIZE);
+	buffer[len] = '\0';
 	if(func(buffer)){
 		*((int *)0) = 0;
 	}

@@ -14,9 +14,7 @@
 #define SIZE 100
 
 int func(char *buffer, int len){
-	int i, count = 0;
-	if(len < 100)
-		return 0;
+	int i, count = 0;	
 	for(i=0;i<80;i++){
 		if(buffer[i]=='A')
 			count++;
@@ -33,12 +31,25 @@ int func(char *buffer, int len){
 }
 
 int main(int argc, char** argv){	
-	char buffer[SIZE];
-	int len = read(STDIN_FILENO, buffer, SIZE);
-	buffer[SIZE-1] = '\0';
-	
-	if (func(buffer,len)){
+	FILE *fileptr;
+	char *buffer;
+	long filelen;
+	fileptr = fopen(argv[1], "rb");
+	if (!fileptr){
+		printf("Could not open file\n");
+		return 1;
+	}
+	fseek(fileptr, 0, SEEK_END);          
+	filelen = ftell(fileptr);             
+	rewind(fileptr);                     
+	buffer = (char *)malloc((filelen+1)*sizeof(char));
+	fread(buffer, filelen, 1, fileptr);
+	printf("Successfully read file\n");	
+	if(filelen < 100)
+		return 0;
+	if(func(buffer, filelen)){
 		*((int *)0) = 0;
 	}
+	fclose(fileptr);
 	return 0;
 }

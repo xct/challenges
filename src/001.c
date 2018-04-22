@@ -27,9 +27,9 @@ int func(char *buf, int len){
 
 int main(int argc, char** argv){	
 	char buffer[SIZE];
-	read(STDIN_FILENO, buffer, SIZE);
-	buffer[SIZE-1] = '\0';
-	if(func(buffer,strlen(buffer))){
+	int len = read(STDIN_FILENO, buffer, SIZE);
+	buffer[len] = '\0';
+	if(func(buffer,len)){
 		*((int *)0) = 0;
 	}
 	return 0;

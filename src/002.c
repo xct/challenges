@@ -38,6 +38,8 @@ int main(int argc, char** argv){
 	buffer = (char *)malloc((filelen+1)*sizeof(char));
 	fread(buffer, filelen, 1, fileptr);
 	printf("Successfully read file\n");	
+	if(filelen < 18)
+		return 0;
 	if(func(buffer, filelen)){
 		*((int *)0) = 0;
 	}

@@ -33,12 +33,26 @@ int func(char *buf, int len){
 }
 
 int main(int argc, char** argv){	
-	char buffer[SIZE];
-	read(STDIN_FILENO, buffer, SIZE);
-	buffer[SIZE-1] = '\0';
-	if(func(buffer,strlen(buffer))){
+	FILE *fileptr;
+	char *buffer;
+	long filelen;
+	fileptr = fopen(argv[1], "rb");
+	if (!fileptr){
+		printf("Could not open file\n");
+		return 1;
+	}
+	fseek(fileptr, 0, SEEK_END);          
+	filelen = ftell(fileptr);             
+	rewind(fileptr);                     
+	buffer = (char *)malloc((filelen+1)*sizeof(char));
+	fread(buffer, filelen, 1, fileptr);
+	printf("Successfully read file\n");
+	if(filelen < 18)
+		return 0;
+	if(func(buffer, filelen)){
 		*((int *)0) = 0;
 	}
+	fclose(fileptr);
 	return 0;
 }
 
