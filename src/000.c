@@ -35,7 +35,7 @@ int main(int argc, char** argv){
 	printf("Successfully read file\n");	
 	if(filelen < 18)
 		return 0;
-	if(func(buffer, filelen)){
+	if(func(buffer)){
 		*((int *)0) = 0;
 	}
 	fclose(fileptr);
